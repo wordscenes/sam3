@@ -35,6 +35,7 @@ class Sam3VideoPredictor:
         async_loading_frames=False,
         video_loader_type="cv2",
         apply_temporal_disambiguation: bool = True,
+        score_threshold_detection: float = 0.5,
     ):
         self.async_loading_frames = async_loading_frames
         self.video_loader_type = video_loader_type
@@ -48,6 +49,7 @@ class Sam3VideoPredictor:
                 geo_encoder_use_img_cross_attn=geo_encoder_use_img_cross_attn,
                 strict_state_dict_loading=strict_state_dict_loading,
                 apply_temporal_disambiguation=apply_temporal_disambiguation,
+                score_threshold_detection=score_threshold_detection,
             )
             .cuda()
             .eval()
@@ -115,6 +117,7 @@ class Sam3VideoPredictor:
             resource_path=resource_path,
             async_loading_frames=self.async_loading_frames,
             video_loader_type=self.video_loader_type,
+            offload_video_to_cpu=True,  # Keep video frames in CPU memory to avoid GPU OOM
         )
         if not session_id:
             session_id = str(uuid.uuid4())
