@@ -102,7 +102,7 @@ class Sam3VideoPredictor:
         else:
             raise RuntimeError(f"invalid request type: {request_type}")
 
-    def start_session(self, resource_path, session_id=None):
+    def start_session(self, resource_path, session_id=None, offload_video_to_cpu=True):
         """
         Start a new inference session on an image or a video. Here `resource_path`
         can be either a path to an image file (for image inference) or an MP4 file
@@ -117,7 +117,7 @@ class Sam3VideoPredictor:
             resource_path=resource_path,
             async_loading_frames=self.async_loading_frames,
             video_loader_type=self.video_loader_type,
-            offload_video_to_cpu=True,  # Keep video frames in CPU memory to avoid GPU OOM
+            offload_video_to_cpu=offload_video_to_cpu,  # Keep video frames in CPU memory to avoid GPU OOM
         )
         if not session_id:
             session_id = str(uuid.uuid4())
