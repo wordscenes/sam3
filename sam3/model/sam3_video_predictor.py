@@ -63,6 +63,7 @@ class Sam3VideoPredictor:
             return self.start_session(
                 resource_path=request["resource_path"],
                 session_id=request.get("session_id", None),
+                offload_video_to_cpu=request.get("offload_video_to_cpu", True),
             )
         elif request_type == "add_prompt":
             return self.add_prompt(
